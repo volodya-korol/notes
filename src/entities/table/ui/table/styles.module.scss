@@ -1,0 +1,23 @@
+.table {
+	border-collapse: separate;
+	border-spacing: 0 15px;
+
+	& thead {
+		background-color: var(--color-medium);
+	}
+	& th {
+		padding: 5px 20px;
+	}
+	& tr {
+		border: 1px solid black;
+		border-radius: 10px;
+	}
+}
+.tbody {
+	& th {
+		font-weight: 400;
+	}
+	& tr {
+		background-color: var(--color-light);
+	}
+}
