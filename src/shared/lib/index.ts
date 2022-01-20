@@ -1,4 +1,6 @@
 import { groupCategories } from './groupCategories';
 import Portal from "./portal";
 import { iconResolver } from "./iconResolver";
-export { iconResolver, Portal,groupCategories };
+import { getDate } from "./getDate";
+
+export { iconResolver, Portal,groupCategories,getDate };

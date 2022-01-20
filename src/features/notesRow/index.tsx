@@ -25,7 +25,7 @@ export const NotesRow = memo(({ note, isArchived = false }: PropsT) => {
 			rightContent={
 				<div className={s.icons}>
 					<NoteModal
-						defaultValues={{ category, content, date, name }}
+						defaultValues={{ category, content, name }}
 						onSubmit={({ category, content, date, name }) => {
 							if (category === "task" || category === "idea" || category === "quote" || category === "random thought") {
 								dispatch(EditNoteAsync({ category, content, name, date, id }));

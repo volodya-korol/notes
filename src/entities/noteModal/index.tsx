@@ -1,18 +1,18 @@
 import { Button } from "antd/lib/radio";
 import React, { memo, useState } from "react";
+import { getDate } from "shared/lib";
 import { ModalWindow } from "shared/ui";
 import s from "./styles.module.scss";
 
-type defaultValues = {
+type defaultValues<T = {}> = {
 	name: string;
 	category: string;
 	content: string;
-	date: string;
-};
+} & T;
 
 type PropsT = {
 	trigger: React.ReactNode;
-	onSubmit: ({ name, category, content, date }: defaultValues) => void;
+	onSubmit: ({ name, category, content, date }: defaultValues<{ date: string }>) => void;
 	defaultValues?: defaultValues;
 };
 
@@ -22,22 +22,21 @@ export const NoteModal = memo(({ trigger, onSubmit, defaultValues }: PropsT) => 
 	const {
 		category: defaultCategory = "idea",
 		content: defaultContent = "",
-		date: defaultDate = "",
 		name: defaultName = "",
 	} = defaultValues ?? {};
 
 	const [name, setName] = useState(defaultName);
 	const [category, setCategory] = useState(defaultCategory);
 	const [content, setContent] = useState(defaultContent);
-	const [date, setDate] = useState(defaultDate);
 
 	const save = async () => {
-		if (name && category && content && date) {
+		const date = getDate(content);
+		if(!date) setError("write date in content  (date format dd-mm-yy example 31.05.2022 , 01/12/2010)")
+		else if (name && category && content && date) {
 			onSubmit({ name, category, content, date });
 			if (!defaultValues?.category) {
 				setCategory("idea");
 				setContent("");
-				setDate("")
 				setName("");
 			}
 
@@ -59,7 +58,7 @@ export const NoteModal = memo(({ trigger, onSubmit, defaultValues }: PropsT) => 
 				title={"Create note"}
 				children={
 					<div className={s.screen}>
-						<p>{error}</p>
+						<p style={{color: "red"}}>{error}</p>
 						<input className={s.name} value={name} placeholder="Task" onChange={(e) => setName(e.target.value)} />
 						<textarea
 							className={s.content}
@@ -80,10 +79,6 @@ export const NoteModal = memo(({ trigger, onSubmit, defaultValues }: PropsT) => 
 								<option value="quote">quote</option>
 								<option value="random thought">random thought</option>
 							</select>
-						</div>
-						<div>
-							<label htmlFor="date">Date </label>
-							<input value={date} onChange={(e) => setDate(e.target.value)} type="date" id="date" />
 						</div>
 
 						<div className={s.buttons}>
