@@ -6,7 +6,6 @@ const App = () => {
 	return (
 		<div className="app">
 			<Routing />
-			ddfsdfsdfsdf
 		</div>
 	);
 };
